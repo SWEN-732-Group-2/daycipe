@@ -2,15 +2,34 @@
 import pkg from 'pg';
 import path from 'path';
 import fs from 'fs';
+import dotenv from 'dotenv';
+dotenv.config();
 const { Pool } = pkg;
 
-export const pool = new Pool({
-  user: "postgres",         // Your PostgreSQL username
-  host: "localhost",        // Your PostgreSQL host
-  database: "daycipe",      // Your PostgreSQL database
-  password: "postgres",     // Your PostgreSQL password
-  port: 5432                // Default PostgreSQL port
-});
+// Define database config based on environment
+const getPoolConfig = () => {
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    if(isProduction) {
+      return process.env.DATABASE_URL = {
+        connectionString: process.env.DATABASE_URL,
+        ssl: isProduction ? { rejectUnauthorized: false } : false
+      }
+    }
+    
+    if (process.env.NODE_ENV === 'test') {
+      return {
+        connectionString: "postgres://postgres:postgres@localhost:5432/daycipe_test"
+      };
+    }
+    
+    // Default to development config
+    return {
+      connectionString: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/daycipe"
+    };
+  };
+  
+export const pool = new Pool(getPoolConfig());
 
 //Initialize DB schema
 const schemaPath = path.resolve('db/schema.sql');
