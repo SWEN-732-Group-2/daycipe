@@ -13,7 +13,7 @@ Daycipe.io is a combination of user interaction and AI generated content as foll
 2. Run ```node index.js``` to run the server. 
     - Correct functioning of this should result in the output *Server listening on port 3001* 
     - The server can be killed with Ctrl+C or killing the terminal
-3. To run the tests ```npm test``` 
+3. To run the tests ```npm test```    
 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SWEN-732-Group-2_daycipe&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SWEN-732-Group-2_daycipe)
